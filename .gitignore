@@ -35,6 +35,7 @@ incremental_db/
 simulation/
 timing/
 testbench/
+output_files/
 *_sim/
 
 *.aux
