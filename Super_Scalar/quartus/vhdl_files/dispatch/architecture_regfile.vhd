@@ -86,7 +86,7 @@ begin
 			  TagData(4) when r1_rob = "100" else
 			  TagData(5) when r1_rob = "101" else
 			  TagData(6) when r1_rob = "110" else
-			  TagData(7) when r1_rob = "111";
+			  TagData(7);
 			  
 	valid_t1 <= r1_rob_decoded when t1_rob = t1_stored else
 					(others => '0');
@@ -98,7 +98,7 @@ begin
 			  TagData(4) when r2_rob = "100" else
 			  TagData(5) when r2_rob = "101" else
 			  TagData(6) when r2_rob = "110" else
-			  TagData(7) when r2_rob = "111";
+			  TagData(7);
 			  
 	valid_t2 <= r2_rob_decoded when t2_rob = t2_stored else
 					(others => '0');
@@ -113,7 +113,7 @@ begin
 			  Valid(4)(0) when R1o1 = "100" else
 			  Valid(5)(0) when R1o1 = "101" else
 			  Valid(6)(0) when R1o1 = "110" else
-			  Valid(7)(0) when R1o1 = "111";
+			  Valid(7)(0);
 			  
 	v1o2 <= Valid(0)(0) when R1o2 = "000" else
 			  Valid(1)(0) when R1o2 = "001" else
@@ -122,7 +122,7 @@ begin
 			  Valid(4)(0) when R1o2 = "100" else
 			  Valid(5)(0) when R1o2 = "101" else
 			  Valid(6)(0) when R1o2 = "110" else
-			  Valid(7)(0) when R1o2 = "111";
+			  Valid(7)(0);
 			  
 	v2o1_temp <= Valid(0)(0) when R2o1 = "000" else
 			  Valid(1)(0) when R2o1 = "001" else
@@ -131,7 +131,7 @@ begin
 			  Valid(4)(0) when R2o1 = "100" else
 			  Valid(5)(0) when R2o1 = "101" else
 			  Valid(6)(0) when R2o1 = "110" else
-			  Valid(7)(0) when R2o1 = "111";
+			  Valid(7)(0);
 			  
 	v2o1 <= v2o1_temp and not(draw1);
 			  
@@ -142,7 +142,7 @@ begin
 			  Valid(4)(0) when R2o2 = "100" else
 			  Valid(5)(0) when R2o2 = "101" else
 			  Valid(6)(0) when R2o2 = "110" else
-			  Valid(7)(0) when R2o2 = "111";
+			  Valid(7)(0);
 			  
 	v2o2 <= v2o2_temp and not(draw2);
 			  
@@ -153,7 +153,7 @@ begin
 			  TagData(4) when R1o1 = "100" else
 			  TagData(5) when R1o1 = "101" else
 			  TagData(6) when R1o1 = "110" else
-			  TagData(7) when R1o1 = "111";
+			  TagData(7);
 			  
 	t1o2 <= TagData(0) when R1o2 = "000" else
 			  TagData(1) when R1o2 = "001" else
@@ -162,7 +162,7 @@ begin
 			  TagData(4) when R1o2 = "100" else
 			  TagData(5) when R1o2 = "101" else
 			  TagData(6) when R1o2 = "110" else
-			  TagData(7) when R1o2 = "111";
+			  TagData(7);
 			  
 	t2o1_temp <= TagData(0) when R2o1 = "000" else
 			  TagData(1) when R2o1 = "001" else
@@ -171,7 +171,7 @@ begin
 			  TagData(4) when R2o1 = "100" else
 			  TagData(5) when R2o1 = "101" else
 			  TagData(6) when R2o1 = "110" else
-			  TagData(7) when R2o1 = "111";
+			  TagData(7);
 			  
 	t2o1 <= t2o1_temp when draw1 = '0' else
 	        t1d;
@@ -183,7 +183,7 @@ begin
 			  TagData(4) when R2o2 = "100" else
 			  TagData(5) when R2o2 = "101" else
 			  TagData(6) when R2o2 = "110" else
-			  TagData(7) when R2o2 = "111";
+			  TagData(7);
 			  
 	t2o2 <= t2o2_temp when draw2 = '0' else
 	        t1d;
@@ -195,7 +195,7 @@ begin
 			  RegData(4) when R1o1 = "100" else
 			  RegData(5) when R1o1 = "101" else
 			  RegData(6) when R1o1 = "110" else
-			  RegData(7) when R1o1 = "111";
+			  RegData(7);
 			  
 	d1o2 <= RegData(0) when R1o2 = "000" else
 			  RegData(1) when R1o2 = "001" else
@@ -204,7 +204,7 @@ begin
 			  RegData(4) when R1o2 = "100" else
 			  RegData(5) when R1o2 = "101" else
 			  RegData(6) when R1o2 = "110" else
-			  RegData(7) when R1o2 = "111";
+			  RegData(7);
 			  
 	d2o1 <= RegData(0) when R2o1 = "000" else
 			  RegData(1) when R2o1 = "001" else
@@ -213,7 +213,7 @@ begin
 			  RegData(4) when R2o1 = "100" else
 			  RegData(5) when R2o1 = "101" else
 			  RegData(6) when R2o1 = "110" else
-			  RegData(7) when R2o1 = "111";
+			  RegData(7);
 			  
 	d2o2 <= RegData(0) when R2o2 = "000" else
 			  RegData(1) when R2o2 = "001" else
@@ -222,7 +222,7 @@ begin
 			  RegData(4) when R2o2 = "100" else
 			  RegData(5) when R2o2 = "101" else
 			  RegData(6) when R2o2 = "110" else
-			  RegData(7) when R2o2 = "111";
+			  RegData(7);
 	
 --	PCen <= R7upd or En(7);
 --	PC_register: DataRegister port map (Dout=>R(7),Enable=>PCen,Din=>WriteDataPC,clk=>clk, reset=>reset);

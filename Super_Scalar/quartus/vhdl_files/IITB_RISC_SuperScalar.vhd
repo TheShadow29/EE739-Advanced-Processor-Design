@@ -5,6 +5,7 @@ library work;
 use work.util_components.all;
 use work.fetch_components.all;
 use work.decode_components.all;
+use work.dispatch_components.all;
 
 
 entity IITB_RISC_SuperScalar is
@@ -92,6 +93,46 @@ imm2_DDs_pipeline: DataRegister port map(Din => imm2_in, Dout => imm2_out, enabl
 LMSM_imm1_DDs_pipeline: DataRegister port map(Din => LMSM_imm1_in, Dout => LMSM_imm1_out, enable => dds_pipeline_en, clk => clk, reset => reset);
 LMSM_imm2_DDs_pipeline: DataRegister port map(Din => LMSM_imm2_in, Dout => LMSM_imm2_out, enable => dds_pipeline_en, clk => clk, reset => reset);
 interdependency_DDs_pipeline: DataRegister port map(Din => interdependency_in, Dout => interdependency_out, enable => dds_pipeline_en, clk => clk, reset => reset);
+
+--ARF: ArchitectureRegFile port map (
+--			R1o1 => R1o1_out,
+--			R1o2 => R1o2_out,
+--			R2o1 => R2o1_out,
+--			R2o2 => R2o2_out,
+--			R1d => R1d_out,
+--			R2d => R2d_out,
+--			den1 => dest_en(0),
+--			den2 => dest_en(1),
+--			t1d => t1d,
+--			t2d => t2d,
+--			
+--			draw1 => interdependency_out(0), draw2 => interdependency_out(1), dwaw => interdependency_out(3),
+--			
+--			-- From ROB
+--			r1_rob => r1_rob,
+--			r2_rob => r2_rob,
+--			wen1 => wen1,
+--			wen2 => wen2,
+--			t1_rob => t1_rob,
+--			t2_rob => t2_rob,
+--			data1_rob => data1_rob,
+--			data2_rob => data2_rob,
+--			
+--			v1o1 => v1o1,
+--			v1o2 => v1o2,
+--			v2o1 => v2o1,
+--			v2o2 => v2o2,
+--			t1o1 => ,
+--			t1o2,
+--			t2o1,
+--			t2o2 : out std_logic_vector(3 downto 0);
+--			d1o1,
+--			d1o2,
+--			d2o1, d2o2 : out std_logic_vector(15 downto 0);
+--			
+--			clk=>clk,
+--			reset=>reset
+--	);
 
 
 end architecture;
