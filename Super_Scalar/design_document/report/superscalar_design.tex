@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[a4paper, tmargin=1in, bmargin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[justification=centering]{caption}
+
+% \usepackage{parskip}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+\title{EE739A - Advanced Processor Design\\
+  Project I : Superscalar IITB RISC
+}
+\author{Meet Udeshi - 14D070007\\
+  OV Shashank - 14D070021\\
+  Arka Sadhu - 140070011\\
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Fetch}
+
+\section{Decode}
+
+\section{Dispatch}
+\subsection{Register Renaming}
+Registers are 16-bit.
+Carry and Zero Flag registers are 1-bit.
+\subsubsection{Architectural Register File}
+\begin{itemize}
+\item They store tags of the corresponding rename regiser for every Architectural registers, along with non-speculative data.
+\item It will also have a valid bit. Whenver interrupt all valid bits are set to 1.
+\item If the AR is renamed, then it is invalid, else it is valid.
+\item It is set valid, only when the tag pointed by it, and the tag broadcasted by the ROB matches.
+\item It will take into account the interdependency bits and use the RRF queue to decide which tags to issue.
+
+\end{itemize}
+\subsubsection{Rename Register File}
+\begin{itemize}
+\item Execution will give the tag for the RR, and the corresponding register will update its value.
+\item This will also be broadcasted RS.
+\end{itemize}
+\subsubsection{RRF Queue}
+\begin{itemize}
+\item Queue of available rename registers, updated based on ROB tag broadcast.
+\end{itemize}
+\subsection{Reservation Station}
+\subsubsection{Allocation Policy}
+\begin{itemize}
+\item Keep a queue (circular), to store the available RS entries for allocation.
+\item This has to check whether or not to stall.
+\item The register values are from the pipeline registers, valid bits from the ARF, and ROB tag from ROB.
+\item It also allocates to the ROB, and checks for stalls.
+\end{itemize}
+\subsubsection{Issue Policy}
+\begin{itemize}
+\item Top-down search for ready bits.
+\item Decides between alu, branch, memory, as well as memory branch Execution pipes.
+\end{itemize}
+\subsubsection{Table}
+\begin{itemize}
+\item Source Rename Register Tags.
+\item Immediate Data
+\item 
+\item ROB tag.
+\end{itemize}
+\section{Execution}
+\subsection{4 Pipes}
+
+\section{Write Back}
+\subsection{Reorder Buffer (ROB)}
+
+\end{document}
