@@ -19,7 +19,7 @@ entity FetchStage is
 		computed_en: in std_logic;
 		
 		 -- goes to FD pipeline register
-		current_pc, I1, I2: out std_logic_vector(15 downto 0);
+		current_pc, current_pc_p1, I1, I2: out std_logic_vector(15 downto 0);
 		
 		-- misc
 		clk, reset: in std_logic
@@ -39,10 +39,11 @@ target_pc_p1 <= target_pc + one_16b;
 pc_din <= target_pc + two_16b;
 
 current_pc <= target_pc;
+current_pc_p1 <= target_pc_p1;
 
 icache_fetch: icache port map (
-						address_a => target_pc,
-						address_b => target_pc_p1,
+						address_a => target_pc(11 downto 0),
+						address_b => target_pc_p1(11 downto 0),
 						clock => clk,
 						q_a => I1,
 						q_b => I2
