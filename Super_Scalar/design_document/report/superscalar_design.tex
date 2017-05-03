@@ -25,21 +25,48 @@
 \maketitle
 
 \section{Fetch}
+\subsection{Program Counter}
+\begin{itemize}
+\item This register is the speculative program counter which is used to fetch from the instruction cache
+\item The actual permanent PC is stored in the ARF corresponding to register R7 as R7 == PC in the ISA
+\item It is updated by PC+2 every cycle, unless a branch misprediction correction is issued or the fetch stage is stalled
+\end{itemize}
+\subsection{Branch Predictor}
+\begin{itemize}
+\item Stores Target Address and Prediction History corresponding to BEQ and JAL
+\item JLR is not stores becuase its target address needs to always be computed and can be multitargeted which adds issues in checking whether the branch taken was to the right address or not
+\item Branches are by default assumed to be not taken so that PC+2 rule can be continually followed
+\item Planned to be implemented as a two bit predictor because the ISA does not allow from good prediction accuracy with small hardware
+\end{itemize}
 
 \section{Decode}
+\subsection{Decoders}
+\begin{itemize}
+\item There are two paraller decoders which generate the necessary control signals for the future stages. This also includes the necessary reordering of the operands into source and destination registers
+\item They include necessary hardware to detect inter-dependencies between the two instructions fetched
+\item They generate inter-dependency bits which are later to be used in the renaming stage by the ARF and RRF to correctly generate and provide the tags
+\item The validity of the destination operand for the ARF as well as for the carry and zero flags are produced which is passed on as the invalid tag bits in the execution stage
+\end{itemize}
+\subsection{LM/SM Handling Block}
+\begin{itemize}
+\item It is responsible for replacing the decode block in case of arrival of an LM or SM
+\item It generates the necessary operands and addresses that are to be written to or read from. This is performed by generating signals similar to the load instruction and simply by incrementing the immediate field
+\item To ensure that the value read from Address Source Register does not change an isLM bit is generated which is a signal for harware in the dispatch stange which ensures correct execution of the instruction
+\end{itemize}
 
 \section{Dispatch}
 \subsection{Register Renaming}
 Registers are 16-bit.
 Carry and Zero Flag registers are 1-bit.
+Renaming is performed for both the registers individually.
 \subsubsection{Architectural Register File}
 \begin{itemize}
 \item They store tags of the corresponding rename regiser for every Architectural registers, along with non-speculative data.
 \item It will also have a valid bit. Whenver interrupt all valid bits are set to 1.
 \item If the AR is renamed, then it is invalid, else it is valid.
 \item It is set valid, only when the tag pointed by it, and the tag broadcasted by the ROB matches.
-\item It will take into account the interdependency bits and use the RRF queue to decide which tags to issue.
-
+\item It will take into account the interdependency bits and use the RRF queue to decide which tags to issue and which to be provided to the 
+reservation station in case of a intra RAW hazard.
 \end{itemize}
 \subsubsection{Rename Register File}
 \begin{itemize}
@@ -70,6 +97,7 @@ Carry and Zero Flag registers are 1-bit.
 \item 
 \item ROB tag.
 \end{itemize}
+
 \section{Execution}
 \subsection{4 Pipes}
 
