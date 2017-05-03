@@ -16,10 +16,12 @@ end entity;
 architecture pipe of IITB_RISC_SuperScalar is
 	signal clk_slow : std_logic := '0';
 begin
-	process(clk)
-	begin
-		if(clk'event and clk = '0') then 
-			clk_slow <= not(clk_slow);
-		end if;
-	end process;
+--	process(clk)
+--	begin
+--		if(clk'event and clk = '0') then 
+--			clk_slow <= not(clk_slow);
+--		end if;
+--	end process;
+
+
 end architecture;
