@@ -64,7 +64,6 @@ set_global_assignment -name VHDL_FILE vhdl_files/util/unary.vhd
 set_global_assignment -name VHDL_FILE vhdl_files/util/priority_encoder.vhd
 set_global_assignment -name VHDL_FILE vhdl_files/util/data_register.vhd
 set_global_assignment -name VHDL_FILE vhdl_files/util/alu.vhd
-set_global_assignment -name VHDL_FILE vhdl_files/util/adder.vhd
 set_global_assignment -name VHDL_FILE vhdl_files/fetch/fetch_components.vhd
 set_global_assignment -name QIP_FILE vhdl_files/fetch/icache.qip
 set_global_assignment -name VHDL_FILE vhdl_files/fetch/branch_predictor.vhd

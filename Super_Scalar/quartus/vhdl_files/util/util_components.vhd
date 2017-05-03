@@ -32,13 +32,13 @@ package util_components is
 				clk, enable, reset: in std_logic);
 	end component;
 	
-	component PipelineDataRegister is
-		--n bit register
-		port (Din: in std_logic_vector;
-				Dout: out std_logic_vector;
-				clk, enable, reset: in std_logic);
-	end component;
-	
+--	component PipelineDataRegister is
+--		--n bit register
+--		port (Din: in std_logic_vector;
+--				Dout: out std_logic_vector;
+--				clk, enable, reset: in std_logic);
+--	end component;
+--	
 	component alu is
 		port
 		(
@@ -50,34 +50,34 @@ package util_components is
 		);
 	end component;
 	
-	component FullAdder is
-		 -- x, y -> input bits
-		 -- ci   -> carry in
-		 -- s    -> sum
-		 -- co   -> carry out
-		 port(
-			  x, y, ci: in std_logic;
-			  s, co: out std_logic
-		 );
-	end component;
-	
-	component Adder is
-		 -- cin    -> carry in
-		 -- x, y   -> 8 bit inputs
-		 -- z      -> sum output
-		 -- cout   -> carry out
-		 port(
-			  x, y: in std_logic_vector(15 downto 0);
-			  z: out std_logic_vector(15 downto 0) := (others => '0')
-		 );
-	end component;
-	
-	component Incrementer is
-		 port(
-			  x: in std_logic_vector(15 downto 0);
-			  z: out std_logic_vector(15 downto 0) := (others => '0')
-		 );
-	end component;
+--	component FullAdder is
+--		 -- x, y -> input bits
+--		 -- ci   -> carry in
+--		 -- s    -> sum
+--		 -- co   -> carry out
+--		 port(
+--			  x, y, ci: in std_logic;
+--			  s, co: out std_logic
+--		 );
+--	end component;
+--	
+--	component Adder is
+--		 -- cin    -> carry in
+--		 -- x, y   -> 8 bit inputs
+--		 -- z      -> sum output
+--		 -- cout   -> carry out
+--		 port(
+--			  x, y: in std_logic_vector(15 downto 0);
+--			  z: out std_logic_vector(15 downto 0) := (others => '0')
+--		 );
+--	end component;
+--	
+--	component Incrementer is
+--		 port(
+--			  x: in std_logic_vector(15 downto 0);
+--			  z: out std_logic_vector(15 downto 0) := (others => '0')
+--		 );
+--	end component;
 	
 	component Decoder8 is
 		port (
