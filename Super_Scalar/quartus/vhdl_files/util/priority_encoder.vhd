@@ -24,6 +24,27 @@ O(6) <= not(A(0)) and A(1) and A(2) and OE;
 O(7) <= A(0) and A(1) and A(2) and OE;
 end architecture;
 
+library ieee;
+	use ieee.std_logic_1164.all;
+library work;
+	use work.util_components.all;
+
+entity Decoder16 is
+	port (
+		A: in std_logic_vector(3 downto 0);
+		OE: in std_logic;
+		O: out std_logic_vector(15 downto 0)
+	);
+end entity Decoder16;
+
+architecture Behave of Decoder8 is
+	signal O_tmp: std_logic_vector(7 downto 0);
+begin
+dec1: Decoder8 port map(OE=>OE, A=>A(2 downto 0), O=>O_tmp);
+O <= (7 downto 0 => O_tmp, others => '0') when A(3) = '0' else
+	  (15 downto 8 => O_tmp, others => '0');
+end architecture;
+
 
 library ieee ;
 use ieee.std_logic_1164.all ;

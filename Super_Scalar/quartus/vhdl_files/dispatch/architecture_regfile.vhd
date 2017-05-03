@@ -22,6 +22,7 @@ entity ArchitectureRegFile is
 			t1_rob, t2_rob: in std_logic_vector(3 downto 0);
 			data1_rob, data2_rob: in std_logic_vector(15 downto 0);
 			
+			-- Output of operands
 			v1o1, v1o2, v2o1, v2o2 : out std_logic;
 			t1o1, t1o2, t2o1, t2o2 : out std_logic_vector(3 downto 0);
 			d1o1, d1o2, d2o1, d2o2 : out std_logic_vector(15 downto 0);

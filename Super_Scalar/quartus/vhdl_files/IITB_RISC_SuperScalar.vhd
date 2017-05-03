@@ -32,6 +32,18 @@ architecture pipe of IITB_RISC_SuperScalar is
 	signal LMSM_imm1_in, LMSM_imm1_out, LMSM_imm2_in, LMSM_imm2_out : std_logic_vector(7 downto 0);
 	signal interdependency_in, interdependency_out: std_logic_vector(6 downto 0);
 		
+	-- ARF signals
+	signal v1o1, v1o2, v2o1, v2o2, den1, den2 : std_logic;
+	signal t1o1, t1o2, t2o1, t2o2, t1d, t2d : std_logic_vector(3 downto 0);
+	signal d1o1, d1o2, d2o1, d2o2 : std_logic_vector(15 downto 0);
+	
+	-- Exec signals
+	
+	-- ROB signals
+	signal r1_rob, r2_rob: std_logic_vector(2 downto 0);
+	signal wen1, wen2: in std_logic;
+	signal t1_rob, t2_rob: in std_logic_vector(3 downto 0);
+	signal data1_rob, data2_rob: in std_logic_vector(15 downto 0);
 		
 	signal fd_pipeline_en, dds_pipeline_en : std_logic := '1';
 begin
@@ -94,45 +106,61 @@ LMSM_imm1_DDs_pipeline: DataRegister port map(Din => LMSM_imm1_in, Dout => LMSM_
 LMSM_imm2_DDs_pipeline: DataRegister port map(Din => LMSM_imm2_in, Dout => LMSM_imm2_out, enable => dds_pipeline_en, clk => clk, reset => reset);
 interdependency_DDs_pipeline: DataRegister port map(Din => interdependency_in, Dout => interdependency_out, enable => dds_pipeline_en, clk => clk, reset => reset);
 
---ARF: ArchitectureRegFile port map (
---			R1o1 => R1o1_out,
---			R1o2 => R1o2_out,
---			R2o1 => R2o1_out,
---			R2o2 => R2o2_out,
---			R1d => R1d_out,
---			R2d => R2d_out,
---			den1 => dest_en(0),
---			den2 => dest_en(1),
---			t1d => t1d,
---			t2d => t2d,
---			
---			draw1 => interdependency_out(0), draw2 => interdependency_out(1), dwaw => interdependency_out(3),
---			
---			-- From ROB
---			r1_rob => r1_rob,
---			r2_rob => r2_rob,
---			wen1 => wen1,
---			wen2 => wen2,
---			t1_rob => t1_rob,
---			t2_rob => t2_rob,
---			data1_rob => data1_rob,
---			data2_rob => data2_rob,
---			
---			v1o1 => v1o1,
---			v1o2 => v1o2,
---			v2o1 => v2o1,
---			v2o2 => v2o2,
---			t1o1 => ,
---			t1o2,
---			t2o1,
---			t2o2 : out std_logic_vector(3 downto 0);
---			d1o1,
---			d1o2,
---			d2o1, d2o2 : out std_logic_vector(15 downto 0);
---			
---			clk=>clk,
---			reset=>reset
---	);
+ARF: ArchitectureRegFile port map (
+			R1o1 => R1o1_out,
+			R1o2 => R1o2_out,
+			R2o1 => R2o1_out,
+			R2o2 => R2o2_out,
+			R1d => R1d_out,
+			R2d => R2d_out,
+			den1 => dest_en(0),
+			den2 => dest_en(1),
+			t1d => t1d,
+			t2d => t2d,
+			
+			draw1 => interdependency_out(0), draw2 => interdependency_out(1), dwaw => interdependency_out(3),
+			
+			-- From ROB
+			r1_rob => r1_rob,
+			r2_rob => r2_rob,
+			wen1 => wen1,
+			wen2 => wen2,
+			t1_rob => t1_rob,
+			t2_rob => t2_rob,
+			data1_rob => data1_rob,
+			data2_rob => data2_rob,
+			
+			-- operand outputs
+			v1o1 => v1o1,
+			v1o2 => v1o2,
+			v2o1 => v2o1,
+			v2o2 => v2o2,
+			t1o1 => t1o1,
+			t1o2 => t1o2,
+			t2o1 => t2o1,
+			t2o2 => t2o2,
+			d1o1 => d1o1,
+			d1o2 => d1o2,
+			d2o1 => d2o1,
+			d2o2 => d2o2,
+			
+			clk=>clk,
+			reset=>reset
+	);
 
+RRF: RenameRegFile port map (
+			t1_rob => t1_rob, t2_rob => t2_rob,
+			data1_rob => data1_rob, data2_rob => data2_rob,
+			del1 => wen1, del2 => wen2,
+			
+			t1_exec => t1_exec, t2_exec => t2_exec, t3_exec => t3_exec,
+			data1_exec => data1_exec, data2_exec => data2_exec, data3_exec => data3_exec,
+			wen1 => data_wen1, wen2 => data_wen2, wen3 => data_wen3,
+			
+			den1 => dest_en(0), den2 => dest_en(1),
+			t1d => t1d, t2d => t2d,
+			
+			clk => clk, reset => reset
+	);
 
 end architecture;

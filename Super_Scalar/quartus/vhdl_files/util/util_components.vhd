@@ -86,4 +86,12 @@ package util_components is
 			O: out std_logic_vector(7 downto 0)
 		);
 	end component;
+	
+	component Decoder16 is
+		port (
+			A: in std_logic_vector(3 downto 0);
+			OE: in std_logic;
+			O: out std_logic_vector(15 downto 0)
+		);
+	end component;
 end util_components;

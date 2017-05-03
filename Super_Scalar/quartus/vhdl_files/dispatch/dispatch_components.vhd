@@ -27,4 +27,21 @@ package dispatch_components is
 				clk, reset: in std_logic
 		);
 	end component;
+	
+	component RenameRegFile is
+		port (
+			t1_rob, t2_rob : in std_logic_vector(3 downto 0);
+			data1_rob, data2_rob: out std_logic_vector(15 downto 0);
+			del1, del2: in std_logic;
+			
+			t1_exec, t2_exec, t3_exec: in std_logic_vector(3 downto 0);
+			data1_exec, data2_exec, data3_exec: in std_logic_vector(15 downto 0);
+			wen1, wen2, wen3: in std_logic;
+			
+			den1, den2: in std_logic;
+			t1d, t2d: out std_logic_vector(3 downto 0);
+			
+			clk, reset: in std_logic
+		);
+	end component;
 end package;
