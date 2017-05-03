@@ -15,7 +15,7 @@ package fetch_components is
 			computed_en: in std_logic;
 			
 			 -- goes to FD pipeline register
-			current_pc, I1, I2: out std_logic_vector(15 downto 0);
+			current_pc, current_pc_p1, I1, I2: out std_logic_vector(15 downto 0);
 			
 			-- misc
 			clk, reset: in std_logic
