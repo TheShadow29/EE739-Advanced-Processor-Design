@@ -1,7 +1,7 @@
 \documentclass{article}
+\usepackage{graphicx, xcolor}
 \usepackage[a4paper, tmargin=1in, bmargin=1in]{geometry}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
 \usepackage[justification=centering]{caption}
 
 % \usepackage{parskip}
@@ -25,6 +25,11 @@
 \maketitle
 
 \section{Fetch}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.4]{../GraphImages/fetch_decode.png}
+\end{figure}
+
 \subsection{Program Counter}
 \begin{itemize}
 \item This register is the speculative program counter which is used to fetch from the instruction cache
@@ -55,6 +60,11 @@
 \end{itemize}
 
 \section{Dispatch}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.2]{../GraphImages/dispatch_stage_arf_rrf.png}
+\end{figure}
+
 \subsection{Register Renaming}
 Registers are 16-bit.
 Carry and Zero Flag registers are 1-bit.
@@ -122,13 +132,34 @@ The reservation station is maintained as a hybrid b/w the distributed and centra
 \end{itemize}
 
 \section{Execution}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{../GraphImages/execution_stage.png}
+\end{figure}
+
 \subsection{3 Pipes}
 The execution unit has one memory pipe which also handles the memory based R7 write branches and two arithmetic and branch pipes
 \subsection{Arithemetic/Branch Pipes}
+\begin{itemize}
+\item Both the pipes are copies of each other
+\item They consist of an ALU which peforms the necessary operation based on the control signals and the values provided to it as an operands which are decided in the decode stage itself
+\item This pipe also contains a branch handling unit which updates the speculative PC based on the data produced and if the instruction was a branch instruction. It also send the necessary flush command to the ROB
+\end{itemize}
+\subsection{Memory Pipe}
+\begin{itemize}
+\item This too consits of a similar branch unit along with the memory block. This pipeline has two stages to account for the memory read and address generation
+\item Loads must also check in the Store Queue present in the write back stage, whether the data has been written or is to be written by any store to the address it must read from and perform the appropriate forwarding
+\end{itemize}
+
 \section{Write Back}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.43]{../GraphImages/writeBack_stage.png}
+\end{figure}
+
 \subsection{Reorder Buffer (ROB)}
 The re-order buffer is implemented as a circular buffer, with head and tail pointers. The head pointer helps in deciding which instructions to retire and the comparison of the head and tail pointer decide when to call for a stall when the ROB get full. \\ \\
-Every cycle 4 of the ROB Tags are set to finished based on the 4 bits which signify the validity of the tags (for example a tag is invalid if it was NOP instruction)
+Every cycle 3 of the ROB Tags are set to finished based on the 3 bits which signify the validity of the tags (for example a tag is invalid if it was NOP instruction)
 \subsubsection{Table Entries}
 \begin{itemize}
 \item Instruction Address
@@ -137,8 +168,6 @@ Every cycle 4 of the ROB Tags are set to finished based on the 4 bits which sign
 \item Speculative Bit and Valid Bit
 \item Finished Bit
 \end{itemize}
-
 \subsection{Store Queue}
-To allow for lazy write. Cannot write to memory in the execution stage
-
+Store Queue is maintained to allow for lazy write. We cannot directly write to memory in the execution stage becuase writing to memory is permanent. Instead this queue acts as the temporary memory and data is marked as finished when the store instruction pops out of the ROB and then the data is forwarded to any loads that require the load till the data is written to the memory.
 \end{document}
