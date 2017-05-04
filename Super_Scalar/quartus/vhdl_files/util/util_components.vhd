@@ -117,4 +117,16 @@ package util_components is
 			clk, reset : in std_logic
 		);
 	end component;
+	
+	component D_cache IS
+	PORT
+	(
+		aclr		: IN STD_LOGIC  := '0';
+		address		: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
+		clock		: IN STD_LOGIC  := '1';
+		data		: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+		wren		: IN STD_LOGIC ;
+		q		: OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
+	);
+	end component;
 end util_components;
