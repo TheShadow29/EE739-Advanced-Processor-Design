@@ -94,4 +94,27 @@ package util_components is
 			O: out std_logic_vector(15 downto 0)
 		);
 	end component;
+	
+	component Queue is
+		generic
+		(
+			--For RRF Queue, word_len = 4, 
+			word_len : in integer;
+			num_words : in integer;
+			head_p_bits : in integer
+		);
+		port 
+		(
+			head_reg_out : out std_logic_vector  := (others => '0');
+			head2_reg_out : out std_logic_vector := (others => '0');
+	--		head_num_out : in std_logic_vector;
+			tail_reg_in : in std_logic_vector  := (others => '0');
+			tail2_reg_in : in std_logic_vector := (others => '0');
+			tail_en : in std_logic_vector(1 downto 0) := (others => '0');--00, 01 or 10
+			head_en : in std_logic_vector(1 downto 0) := (others => '0');--00, 01 or 10
+			
+			not_empty : out std_logic;
+			clk, reset : in std_logic
+		);
+	end component;
 end util_components;
