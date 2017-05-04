@@ -38,17 +38,17 @@ begin
 		RRFDataX: DataRegister port map (Dout=>RegData(I),Enable=>En_data(I),Din=>WriteData(I),clk=>clk, reset=>reset);
 		RRFvalidX: DataRegister port map (Dout=>Valid(I),Enable=>En_valid(I),Din=>ValidNew(I),clk=>clk,reset=>reset);
 
-		WriteData(I) <= data3_exec when sel3_exec(I) = '1' else
-							 data2_exec when sel2_exec(I) = '1' else
+		WriteData(I) <= data3_exec when sel3_data(I) = '1' else
+							 data2_exec when sel2_data(I) = '1' else
 							 data1_exec;
 	end generate RRF;
 
 	data1_rob <= RegData(to_integer(unsigned(t1_rob)));
 	data2_rob <= RegData(to_integer(unsigned(t2_rob)));
 	
-	sel1_decode: Decode16 port map(A=>t1_exec, O=>sel1_data, OE=>wen1);
-	sel2_decode: Decode16 port map(A=>t2_exec, O=>sel2_data, OE=>wen2);
-	sel3_decode: Decode16 port map(A=>t3_exec, O=>sel3_data, OE=>wen3);
+	sel1_decode: Decoder16 port map(A=>t1_exec, O=>sel1_data, OE=>wen1);
+	sel2_decode: Decoder16 port map(A=>t2_exec, O=>sel2_data, OE=>wen2);
+	sel3_decode: Decoder16 port map(A=>t3_exec, O=>sel3_data, OE=>wen3);
 	
 	En_data <= sel1_data or sel2_data or sel3_data;
 	

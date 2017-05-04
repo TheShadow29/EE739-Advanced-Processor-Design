@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 library work;
 use work.dispatch_components.all;
@@ -22,7 +23,7 @@ entity reservation_station is
 		--rob tags
 		rob_t1, rob_t2 : in std_logic_vector(3 downto 0);
 		--issue id
-		issue_id1, issue_id1 : in std_logic_vector(3 downto 0);
+		issue_id1, issue_id2 : in std_logic_vector(3 downto 0);
 		--issue data
 		d11_out, d12_out, d21_out, d22_out : out std_logic_vector(15 downto 0);
 		--exec tags
@@ -50,6 +51,7 @@ architecture rs of reservation_station is
 
 	--	constant zeros_16b : std_logic_vector(15 downto 0) := (others => '0');
 begin
+	ResStat:
 	for I in 0 to 15 generate
 		rs_data1x : DataRegister port map (Dout => data1(I), Enable => en_data1(I), Din => write_data1(I),clk => clk, reset => reset);
 		rs_data2x : DataRegister port map (Dout => data2(I), Enable => en_data2(I), Din => write_data2(I),clk => clk, reset => reset);		
@@ -76,13 +78,13 @@ begin
 	
 	sel_alloc_id <= alloc_decoded2;
  
-	ready_bits <= valid1 and valid2;
+	ready_bits <= valid1(15 downto 0)(0) and valid2(15 downto 0)(0);
 	
-	d11_out <= data1(to_integer(unsigned(issue_id1));
-	d12_out <= data2(to_integer(unsigned(issue_id1));
+	d11_out <= data1(to_integer(unsigned(issue_id1)));
+	d12_out <= data2(to_integer(unsigned(issue_id1)));
 	
-	d21_out <= data1(to_integer(unsigned(issue_id2));
-	d22_out <= data2(to_integer(unsigned(issue_id2));
+	d21_out <= data1(to_integer(unsigned(issue_id2)));
+	d22_out <= data2(to_integer(unsigned(issue_id2)));
 	
 	
 	

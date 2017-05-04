@@ -37,12 +37,17 @@ entity Decoder16 is
 	);
 end entity Decoder16;
 
-architecture Behave of Decoder8 is
+architecture behaviour of Decoder16 is
 	signal O_tmp: std_logic_vector(7 downto 0);
+	signal o_full_tmp1 : std_logic_vector(15 downto 0) := (others => '0');
+	signal o_full_tmp2 : std_logic_vector(15 downto 0) := (others => '0');
 begin
 dec1: Decoder8 port map(OE=>OE, A=>A(2 downto 0), O=>O_tmp);
-O <= (7 downto 0 => O_tmp, others => '0') when A(3) = '0' else
-	  (15 downto 8 => O_tmp, others => '0');
+o_full_tmp1(7 downto 0) <= O_tmp;
+o_full_tmp2(15 downto 0) <= O_tmp;
+--O <= (7 downto 0 => O_tmp, others => '0') when A(3) = '0' else
+--	  (15 downto 8 => O_tmp, others => '0');
+O <= o_full_tmp1 when A(3) = '0' else o_full_tmp2;
 end architecture;
 
 
